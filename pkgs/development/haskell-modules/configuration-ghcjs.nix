@@ -18,6 +18,11 @@ self: super:
   inherit (self.ghc.bootPkgs)
     jailbreak-cabal alex happy gtk2hs-buildtools rehoo hoogle;
 
+  # ghcjs definition in `pkgs/top-level/haskell-packages.nix` does not
+  # pass in `llvmPackages` attribute. We unset it here to override the
+  # default set in configuration-ghc-8.10.x.nix.
+  llvmPackages = null;
+
   # Test suite fails; https://github.com/ghcjs/ghcjs-base/issues/133
   ghcjs-base = dontCheck (self.callPackage ../compilers/ghcjs/ghcjs-base.nix {
     fetchFromGitHub = pkgs.buildPackages.fetchFromGitHub;
@@ -26,7 +31,7 @@ self: super:
 
   # GHCJS does not ship with the same core packages as GHC.
   # https://github.com/ghcjs/ghcjs/issues/676
-  stm = doJailbreak self.stm_2_5_1_0;
+  stm = doJailbreak self.stm_2_5_3_0;
   exceptions = dontCheck self.exceptions_0_10_7;
 
 ## OTHER PACKAGES
