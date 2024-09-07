@@ -17392,7 +17392,7 @@ with pkgs;
 
   autocutsel = callPackage ../tools/X11/autocutsel{ };
 
-  automake = automake116x;
+  automake = automake117x;
 
   automake111x = callPackage ../development/tools/misc/automake/automake-1.11.x.nix { };
 
