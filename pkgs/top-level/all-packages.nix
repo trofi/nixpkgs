@@ -20432,7 +20432,7 @@ with pkgs;
   gnutls = callPackage ../development/libraries/gnutls {
     inherit (darwin.apple_sdk.frameworks) Security;
     util-linux = util-linuxMinimal; # break the cyclic dependency
-    autoconf = buildPackages.autoconf269;
+    autoreconfHook = buildPackages.autoreconfHook269;
   };
 
   gpac = callPackage ../applications/video/gpac {
