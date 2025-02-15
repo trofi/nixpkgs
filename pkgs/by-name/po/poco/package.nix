@@ -10,6 +10,7 @@
   sqlite,
   openssl,
   unixODBC,
+  utf8proc,
   libmysqlclient,
 }:
 
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     unixODBC
+    utf8proc
     libmysqlclient
   ];
   propagatedBuildInputs = [
@@ -50,8 +52,15 @@ stdenv.mkDerivation rec {
   MYSQL_DIR = libmysqlclient;
   MYSQL_INCLUDE_DIR = "${MYSQL_DIR}/include/mysql";
 
-  configureFlags = [
-    "--unbundled"
+  cmakeFlags = [
+    # use nix provided versions of sqlite, zlib, pcre, expat, ... instead of bundled versions
+    "-DPOCO_UNBUNDLED=ON"
+  ];
+
+  patches = [
+    # poco builds its own version of pcre, disable it
+    # https://github.com/pocoproject/poco/issues/4871
+    ./disable-internal-pcre-files-for-non-static-builds.patch
   ];
 
   postFixup = ''
