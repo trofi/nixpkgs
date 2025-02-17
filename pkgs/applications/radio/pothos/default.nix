@@ -18,6 +18,7 @@
   alsa-lib,
   muparserx,
   python3,
+  utf8proc,
 }:
 
 mkDerivation rec {
@@ -67,6 +68,7 @@ mkDerivation rec {
     alsa-lib
     muparserx
     python3
+    utf8proc
   ];
 
   postInstall = ''
