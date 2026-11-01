@@ -48,6 +48,8 @@ stdenv.mkDerivation rec {
     libxrandr
   ];
 
+  strictDeps = true;
+
   enableParallelBuilding = true;
 
   hardeningDisable = [
