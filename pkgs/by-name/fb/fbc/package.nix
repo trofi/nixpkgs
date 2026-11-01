@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
     make clean
 
     echo Compile patched host everything with previous patched stage
-    buildFlagsArray+=("FBC=$PWD/patched-fbc/bin/fbc${stdenv.buildPlatform.extensions.executable} -i $PWD/inc")
+    buildFlags+=("FBC=$PWD/patched-fbc/bin/fbc${stdenv.buildPlatform.extensions.executable} -i $PWD/inc")
   '';
 
   installFlags = [
@@ -123,11 +123,13 @@ stdenv.mkDerivation rec {
 
     # Run check targets in series, else the logs are a mess
     for target in $checkTarget; do
-      make $target -j$checkJobs $makeFlags $checkFlags
+      make $target -j$checkJobs "''${makeFlags[@]}" "''${checkFlags[@]}"
     done
 
     runHook postCheck
   '';
+
+  __structuredAttrs = true;
 
   meta = {
     homepage = "https://www.freebasic.net/";
